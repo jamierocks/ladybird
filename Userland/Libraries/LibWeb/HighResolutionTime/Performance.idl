@@ -35,4 +35,10 @@ interface Performance : EventTarget {
     readonly attribute PerformanceTiming timing;
     [SameObject]
     readonly attribute PerformanceNavigation navigation;
+
+    // https://w3c.github.io/resource-timing/#sec-extensions-performance-interface
+    // "Resource Timing" extension to the Performance interface
+    undefined clearResourceTimings();
+    undefined setResourceTimingBufferSize(unsigned long maxSize);
+    attribute EventHandler onresourcetimingbufferfull;
 };

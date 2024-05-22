@@ -334,6 +334,17 @@ Optional<StringView> Response::network_error_message() const
     return m_network_error_message->visit([](auto const& s) -> StringView { return s; });
 }
 
+StringView response_cache_state_to_string(Response::CacheState cache_state)
+{
+    switch (cache_state) {
+    case Response::CacheState::Local:
+        return "local"sv;
+    case Response::CacheState::Validated:
+        return "validated"sv;
+    }
+    VERIFY_NOT_REACHED();
+}
+
 FilteredResponse::FilteredResponse(JS::NonnullGCPtr<Response> internal_response, JS::NonnullGCPtr<HeaderList> header_list)
     : Response(header_list)
     , m_internal_response(internal_response)

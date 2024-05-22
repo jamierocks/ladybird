@@ -529,6 +529,7 @@ private:
     BufferPolicy m_buffer_policy { BufferPolicy::BufferResponse };
 };
 
+StringView request_initiator_type_to_string(Request::InitiatorType);
 StringView request_destination_to_string(Request::Destination);
 StringView request_mode_to_string(Request::Mode);
 

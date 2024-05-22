@@ -371,6 +371,55 @@ bool Request::cross_origin_embedder_policy_allows_credentials() const
     return request_origin->is_same_origin(DOMURL::url_origin(current_url())) && !has_redirect_tainted_origin();
 }
 
+StringView request_initiator_type_to_string(Request::InitiatorType initiator_type)
+{
+    switch (initiator_type) {
+    case Request::InitiatorType::Audio:
+        return "audio"sv;
+    case Request::InitiatorType::Beacon:
+        return "beacon"sv;
+    case Request::InitiatorType::Body:
+        return "body"sv;
+    case Request::InitiatorType::CSS:
+        return "css"sv;
+    case Request::InitiatorType::EarlyHint:
+        return "early-hints"sv;
+    case Request::InitiatorType::Embed:
+        return "embed"sv;
+    case Request::InitiatorType::Fetch:
+        return "fetch"sv;
+    case Request::InitiatorType::Font:
+        return "font"sv;
+    case Request::InitiatorType::Frame:
+        return "frame"sv;
+    case Request::InitiatorType::IFrame:
+        return "iframe"sv;
+    case Request::InitiatorType::Image:
+        return "image"sv;
+    case Request::InitiatorType::IMG:
+        return "img"sv;
+    case Request::InitiatorType::Input:
+        return "input"sv;
+    case Request::InitiatorType::Link:
+        return "link"sv;
+    case Request::InitiatorType::Object:
+        return "object"sv;
+    case Request::InitiatorType::Ping:
+        return "ping"sv;
+    case Request::InitiatorType::Script:
+        return "script"sv;
+    case Request::InitiatorType::Track:
+        return "track"sv;
+    case Request::InitiatorType::Video:
+        return "video"sv;
+    case Request::InitiatorType::XMLHttpRequest:
+        return "xmlhttprequest"sv;
+    case Request::InitiatorType::Other:
+        return "other"sv;
+    }
+    VERIFY_NOT_REACHED();
+}
+
 StringView request_destination_to_string(Request::Destination destination)
 {
     switch (destination) {

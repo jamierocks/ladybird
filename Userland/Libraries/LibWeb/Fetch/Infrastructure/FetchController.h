@@ -35,12 +35,12 @@ public:
     [[nodiscard]] static JS::NonnullGCPtr<FetchController> create(JS::VM&);
 
     void set_full_timing_info(JS::NonnullGCPtr<FetchTimingInfo> full_timing_info) { m_full_timing_info = full_timing_info; }
-    void set_report_timing_steps(Function<void(JS::Object const&)> report_timing_steps);
+    void set_report_timing_steps(Function<void(JS::Object&)> report_timing_steps);
     void set_next_manual_redirect_steps(Function<void()> next_manual_redirect_steps);
 
     [[nodiscard]] State state() const { return m_state; }
 
-    void report_timing(JS::Object const&) const;
+    void report_timing(JS::Object&) const;
     void process_next_manual_redirect() const;
     [[nodiscard]] JS::NonnullGCPtr<FetchTimingInfo> extract_full_timing_info() const;
     void abort(JS::Realm&, Optional<JS::Value>);
@@ -72,7 +72,7 @@ private:
     // https://fetch.spec.whatwg.org/#fetch-controller-report-timing-steps
     // report timing steps (default null)
     //    Null or an algorithm accepting a global object.
-    JS::GCPtr<JS::HeapFunction<void(JS::Object const&)>> m_report_timing_steps;
+    JS::GCPtr<JS::HeapFunction<void(JS::Object&)>> m_report_timing_steps;
 
     // https://fetch.spec.whatwg.org/#fetch-controller-report-timing-steps
     // FIXME: serialized abort reason (default null)

@@ -202,6 +202,8 @@ private:
     Optional<Variant<String, StringView>> m_network_error_message;
 };
 
+StringView response_cache_state_to_string(Response::CacheState);
+
 // https://fetch.spec.whatwg.org/#concept-filtered-response
 class FilteredResponse : public Response {
     JS_CELL(FilteredResponse, Response);

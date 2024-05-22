@@ -631,6 +631,10 @@ namespace Web::ResizeObserver {
 class ResizeObserver;
 }
 
+namespace Web::ResourceTiming {
+class PerformanceResourceTiming;
+}
+
 namespace Web::Selection {
 class Selection;
 }

@@ -73,6 +73,7 @@ static bool is_platform_object(Type const& type)
         "Node"sv,
         "Path2D"sv,
         "PerformanceEntry"sv,
+        "PerformanceResourceTiming"sv,
         "PerformanceMark"sv,
         "PerformanceNavigation"sv,
         "PeriodicWave"sv,
@@ -4162,6 +4163,7 @@ static void generate_using_namespace_definitions(SourceGenerator& generator)
     using namespace Web::Selection;
     using namespace Web::NavigationTiming;
     using namespace Web::PerformanceTimeline;
+    using namespace Web::ResourceTiming;
     using namespace Web::UserTiming;
     using namespace Web::Streams;
     using namespace Web::SVG;

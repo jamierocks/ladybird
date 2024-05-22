@@ -37,6 +37,11 @@ public:
     JS::GCPtr<NavigationTiming::PerformanceTiming> timing();
     JS::GCPtr<NavigationTiming::PerformanceNavigation> navigation();
 
+    void clear_resource_timings();
+    void set_resource_timing_buffer_size(WebIDL::UnsignedLong max_size);
+    WebIDL::CallbackType* onresourcetimingbufferfull();
+    void set_onresourcetimingbufferfull(WebIDL::CallbackType*);
+
 private:
     explicit Performance(JS::Realm&);
 

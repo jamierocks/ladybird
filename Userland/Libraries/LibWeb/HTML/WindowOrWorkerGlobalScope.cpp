@@ -718,6 +718,48 @@ JS::NonnullGCPtr<IndexedDB::IDBFactory> WindowOrWorkerGlobalScopeMixin::indexed_
     return *m_indexed_db;
 }
 
+// https://w3c.github.io/resource-timing/#dfn-can-add-resource-timing-entry
+bool WindowOrWorkerGlobalScopeMixin::can_add_resource_timing_entry()
+{
+    // 1. If resource timing buffer current size is smaller than resource timing buffer size limit, return true.
+    if (m_resource_timing_buffer_current_size < m_resource_timing_buffer_size_limit)
+        return true;
+
+    // 2. Return false.
+    return false;
+}
+
+// https://w3c.github.io/resource-timing/#dfn-add-a-performanceresourcetiming-entry
+void WindowOrWorkerGlobalScopeMixin::add_resource_timing_entry(JS::NonnullGCPtr<ResourceTiming::PerformanceResourceTiming> entry)
+{
+    (void)entry;
+
+    // 1. If can add resource timing entry returns true and resource timing buffer full event pending flag is false,
+    //    run the following substeps:
+    if (can_add_resource_timing_entry() && !m_resource_timing_buffer_full_event_pending_flag) {
+        // FIXME: a. Add new entry to the performance entry buffer.
+
+        // b. Increase resource timing buffer current size by 1.
+        ++m_resource_timing_buffer_current_size;
+
+        // c. Return.
+        return;
+    }
+
+    // 2. If resource timing buffer full event pending flag is false, run the following substeps:
+    if (!m_resource_timing_buffer_full_event_pending_flag) {
+        // a. Set resource timing buffer full event pending flag to true.
+        m_resource_timing_buffer_full_event_pending_flag = true;
+
+        // FIXME: b. Queue a task on the performance timeline task source to run fire a buffer full event.
+    }
+
+    // FIXME: 3. Add new entry to the resource timing secondary buffer.
+
+    // 4. Increase resource timing secondary buffer current size by 1.
+    ++m_resource_timing_secondary_buffer_current_size;
+}
+
 // https://w3c.github.io/performance-timeline/#dfn-frozen-array-of-supported-entry-types
 JS::NonnullGCPtr<JS::Object> WindowOrWorkerGlobalScopeMixin::supported_entry_types() const
 {

@@ -50,6 +50,7 @@
 #include <LibWeb/MixedContent/AbstractOperations.h>
 #include <LibWeb/Platform/EventLoopPlugin.h>
 #include <LibWeb/ReferrerPolicy/AbstractOperations.h>
+#include <LibWeb/ResourceTiming/AbstractOperations.h>
 #include <LibWeb/SRI/SRI.h>
 #include <LibWeb/SecureContexts/AbstractOperations.h>
 #include <LibWeb/Streams/TransformStream.h>
@@ -626,7 +627,7 @@ void fetch_response_handover(JS::Realm& realm, Infrastructure::FetchParams const
             fetch_params.controller()->set_full_timing_info(fetch_params.timing_info());
 
         // 3. Set fetchParams’s controller’s report timing steps to the following steps given a global object global:
-        fetch_params.controller()->set_report_timing_steps([&vm, &response, &fetch_params, timing_info, unsafe_end_time](JS::Object const& global) mutable {
+        fetch_params.controller()->set_report_timing_steps([&vm, &response, &fetch_params, timing_info, unsafe_end_time](JS::Object& global) mutable {
             // 1. If fetchParams’s request’s URL’s scheme is not an HTTP(S) scheme, then return.
             if (!Infrastructure::is_http_or_https_scheme(fetch_params.request()->url().scheme()))
                 return;
@@ -666,13 +667,19 @@ void fetch_response_handover(JS::Realm& realm, Infrastructure::FetchParams const
                     body_info.content_type = MimeSniff::minimise_a_supported_mime_type(mime_type.value());
             }
 
-            // FIXME: 8. If fetchParams’s request’s initiator type is not null, then mark resource timing given timingInfo,
-            //           request’s URL, request’s initiator type, global, cacheState, bodyInfo, and responseStatus.
-            (void)timing_info;
-            (void)global;
-            (void)cache_state;
-            (void)body_info;
-            (void)response_status;
+            // 8. If fetchParams’s request’s initiator type is not null, then mark resource timing given timingInfo,
+            //    request’s URL, request’s initiator type, global, cacheState, bodyInfo, and responseStatus.
+            if (fetch_params.request()->initiator_type().has_value()) {
+                ResourceTiming::mark_resource_timing(
+                    timing_info,
+                    MUST(String::from_byte_string(fetch_params.request()->url().serialize())),
+                    MUST(String::from_utf8(Infrastructure::request_initiator_type_to_string(fetch_params.request()->initiator_type().value()))),
+                    global,
+                    cache_state.has_value() ? MUST(String::from_utf8(Infrastructure::response_cache_state_to_string(cache_state.value()))) : ""_string,
+                    body_info,
+                    response_status
+                );
+            }
         });
 
         // 4. Let processResponseEndOfBodyTask be the following steps:

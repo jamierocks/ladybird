@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2023, Linus Groh <linusg@serenityos.org>
  * Copyright (c) 2023, Luke Wilde <lukew@serenityos.org>
+ * Copyright (c) 2024, Jamie Mansfield <jmansfield@cadixdev.org>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -76,6 +77,15 @@ public:
 
     JS::NonnullGCPtr<IndexedDB::IDBFactory> indexed_db();
 
+    WebIDL::UnsignedLong resource_timing_buffer_size_limit() const { return m_resource_timing_buffer_size_limit; }
+    void set_resource_timing_buffer_size_limit(WebIDL::UnsignedLong max_size) { m_resource_timing_buffer_size_limit = max_size; }
+
+    WebIDL::UnsignedLong resource_timing_buffer_current_size() const { return m_resource_timing_buffer_current_size; }
+    void set_resource_timing_buffer_current_size(WebIDL::UnsignedLong size) { m_resource_timing_buffer_current_size = size; }
+
+    bool can_add_resource_timing_entry();
+    void add_resource_timing_entry(JS::NonnullGCPtr<ResourceTiming::PerformanceResourceTiming> entry);
+
     void report_error(JS::Value e);
 
 protected:
@@ -103,6 +113,25 @@ private:
 
     // - a list of registered performance observer objects that is initially empty
     OrderedHashTable<JS::NonnullGCPtr<PerformanceTimeline::PerformanceObserver>> m_registered_performance_observer_objects;
+
+    // https://w3c.github.io/resource-timing/#dfn-resource-timing-buffer-size-limit
+    // A resource timing buffer size limit which should initially be 250 or greater.
+    WebIDL::UnsignedLong m_resource_timing_buffer_size_limit { 250 };
+
+    // https://w3c.github.io/resource-timing/#dfn-resource-timing-buffer-current-size
+    // A resource timing buffer current size which is initially 0.
+    WebIDL::UnsignedLong m_resource_timing_buffer_current_size { 0 };
+
+    // https://w3c.github.io/resource-timing/#dfn-resource-timing-buffer-full-event-pending-flag
+    // A resource timing buffer full event pending flag which is initially false.
+    bool m_resource_timing_buffer_full_event_pending_flag { false };
+
+    // https://w3c.github.io/resource-timing/#dfn-resource-timing-secondary-buffer-current-size
+    // A resource timing secondary buffer current size which is initially 0.
+    WebIDL::UnsignedLong m_resource_timing_secondary_buffer_current_size { 0 };
+
+    // https://w3c.github.io/resource-timing/#dfn-resource-timing-secondary-buffer
+    // FIXME: A resource timing secondary buffer to store PerformanceResourceTiming objects that is initially empty.
 
     // https://www.w3.org/TR/performance-timeline/#dfn-performance-entry-buffer-map
     // a performance entry buffer map map, keyed on a DOMString, representing the entry type to which the buffer belongs. The map's value is the following tuple:
