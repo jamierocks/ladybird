@@ -60,6 +60,7 @@ static bool is_platform_object(Type const& type)
         "Instance"sv,
         "IntersectionObserverEntry"sv,
         "KeyframeEffect"sv,
+        "MediaImage"sv,
         "MediaList"sv,
         "Memory"sv,
         "MessagePort"sv,
@@ -4133,6 +4134,7 @@ static void generate_using_namespace_definitions(SourceGenerator& generator)
     using namespace Web::RequestIdleCallback;
     using namespace Web::ResizeObserver;
     using namespace Web::Selection;
+    using namespace Web::MediaSession;
     using namespace Web::NavigationTiming;
     using namespace Web::PerformanceTimeline;
     using namespace Web::UserTiming;

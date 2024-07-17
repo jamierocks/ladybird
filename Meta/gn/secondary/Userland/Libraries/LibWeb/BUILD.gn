@@ -315,6 +315,7 @@ shared_library("LibWeb") {
            "Layout",
            "Loader",
            "MathML",
+           "MediaSession",
            "MimeSniff",
            "MixedContent",
            "NavigationTiming",

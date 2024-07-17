@@ -526,6 +526,8 @@ set(SOURCES
     Loader/ResourceLoader.cpp
     MathML/MathMLElement.cpp
     MathML/TagNames.cpp
+    MediaSession/ChapterInformation.cpp
+    MediaSession/MediaMetadata.cpp
     MimeSniff/MimeType.cpp
     MimeSniff/Resource.cpp
     MixedContent/AbstractOperations.cpp

@@ -1,0 +1,15 @@
+#import <MediaSession/MediaImage.idl>
+
+// https://w3c.github.io/mediasession/#chapterinformation
+[Exposed=Window]
+interface ChapterInformation {
+    readonly attribute DOMString title;
+    readonly attribute double startTime;
+    [FIXME, SameObject] readonly attribute FrozenArray<MediaImage> artwork;
+};
+
+dictionary ChapterInformationInit {
+    DOMString title = "";
+    double startTime = 0;
+    sequence<MediaImage> artwork = [];
+};

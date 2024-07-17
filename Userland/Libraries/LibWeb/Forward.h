@@ -571,6 +571,11 @@ namespace Web::MathML {
 class MathMLElement;
 }
 
+namespace Web::MediaSession {
+class ChapterInformation;
+class MediaMetadata;
+}
+
 namespace Web::MimeSniff {
 class MimeType;
 }
