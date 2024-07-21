@@ -22,4 +22,7 @@ interface CSSRule {
     const unsigned short NAMESPACE_RULE = 10;
     const unsigned short SUPPORTS_RULE = 12;
 
+    // https://drafts.csswg.org/css-fonts/#dom-cssrule-font_feature_values_rule
+    const unsigned short FONT_FEATURE_VALUES_RULE = 14;
+
 };
