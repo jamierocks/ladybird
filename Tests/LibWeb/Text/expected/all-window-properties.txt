@@ -317,6 +317,7 @@ ShadowRoot
 SharedArrayBuffer
 StaticRange
 Storage
+StorageEvent
 String
 StyleSheet
 StyleSheetList

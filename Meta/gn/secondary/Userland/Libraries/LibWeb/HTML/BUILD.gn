@@ -162,6 +162,7 @@ source_set("HTML") {
     "SharedResourceRequest.cpp",
     "SourceSet.cpp",
     "Storage.cpp",
+    "StorageEvent.cpp",
     "StructuredSerialize.cpp",
     "SubmitEvent.cpp",
     "TagNames.cpp",

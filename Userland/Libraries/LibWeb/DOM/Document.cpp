@@ -100,6 +100,7 @@
 #include <LibWeb/HTML/Scripting/ExceptionReporter.h>
 #include <LibWeb/HTML/Scripting/WindowEnvironmentSettingsObject.h>
 #include <LibWeb/HTML/SharedResourceRequest.h>
+#include <LibWeb/HTML/StorageEvent.h>
 #include <LibWeb/HTML/TraversableNavigable.h>
 #include <LibWeb/HTML/Window.h>
 #include <LibWeb/HTML/WindowProxy.h>
@@ -1712,7 +1713,7 @@ WebIDL::ExceptionOr<JS::NonnullGCPtr<Event>> Document::create_event(StringView i
         || Infra::is_ascii_case_insensitive_match(interface, "mouseevents"sv)) {
         event = UIEvents::MouseEvent::create(realm, FlyString {});
     } else if (Infra::is_ascii_case_insensitive_match(interface, "storageevent"sv)) {
-        event = Event::create(realm, FlyString {}); // FIXME: Create StorageEvent
+        event = HTML::StorageEvent::create(realm, String {}, {});
     } else if (Infra::is_ascii_case_insensitive_match(interface, "svgevents"sv)) {
         event = Event::create(realm, FlyString {});
     } else if (Infra::is_ascii_case_insensitive_match(interface, "textevent"sv)) {

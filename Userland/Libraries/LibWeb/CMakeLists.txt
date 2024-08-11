@@ -437,6 +437,7 @@ set(SOURCES
     HTML/SharedResourceRequest.cpp
     HTML/SourceSet.cpp
     HTML/Storage.cpp
+    HTML/StorageEvent.cpp
     HTML/StructuredSerialize.cpp
     HTML/SubmitEvent.cpp
     HTML/SyntaxHighlighter/SyntaxHighlighter.cpp

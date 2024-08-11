@@ -84,6 +84,7 @@ static bool is_platform_object(Type const& type)
         "ReadableStream"sv,
         "Request"sv,
         "Selection"sv,
+        "Storage"sv,
         "SVGTransform"sv,
         "ShadowRoot"sv,
         "Table"sv,
