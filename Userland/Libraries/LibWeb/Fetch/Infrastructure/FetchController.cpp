@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2022, Linus Groh <linusg@serenityos.org>
+ * Copyright (c) 2024, Jamie Mansfield <jmansfield@cadixdev.org>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -95,8 +96,6 @@ void FetchController::abort(JS::Realm& realm, Optional<JS::Value> error)
     }
 }
 
-// FIXME: https://fetch.spec.whatwg.org/#deserialize-a-serialized-abort-reason
-
 // https://fetch.spec.whatwg.org/#fetch-controller-terminate
 void FetchController::terminate()
 {
@@ -134,6 +133,28 @@ void FetchController::fetch_task_queued(u64 fetch_task_id, HTML::TaskID event_id
 void FetchController::fetch_task_complete(u64 fetch_task_id)
 {
     m_ongoing_fetch_tasks.remove(fetch_task_id);
+}
+
+// https://fetch.spec.whatwg.org/#deserialize-a-serialized-abort-reason
+JS::Value deserialise_a_serialised_abort_reason(JS::Realm& realm, Optional<HTML::SerializationRecord> const& abort_reason)
+{
+    // 1. Let fallbackError be an "AbortError" DOMException.
+    auto fallback_error = WebIDL::AbortError::create(realm, "Fetch was aborted"_fly_string);
+
+    // 2. Let deserializedError be fallbackError.
+    JS::Value deserialised_error = fallback_error;
+
+    // 3. If abortReason is non-null, then set deserializedError to StructuredDeserialize(abortReason, realm).
+    //    If that threw an exception or returned undefined, then set deserializedError to fallbackError.
+    if (abort_reason.has_value()) {
+        auto deserialised_abort_reason = HTML::structured_deserialize(realm.vm(), abort_reason.value(), realm, {});
+        if (!deserialised_abort_reason.is_exception()) {
+            deserialised_error = deserialised_abort_reason.value();
+        }
+    }
+
+    // 4. Return deserializedError.
+    return deserialised_error;
 }
 
 }

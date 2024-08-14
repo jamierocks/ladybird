@@ -93,4 +93,6 @@ private:
     u64 m_next_fetch_task_id { 0 };
 };
 
+JS::Value deserialise_a_serialised_abort_reason(JS::Realm& realm, Optional<HTML::SerializationRecord> const& abort_reason);
+
 }
