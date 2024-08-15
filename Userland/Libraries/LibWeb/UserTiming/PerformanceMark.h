@@ -39,12 +39,10 @@ public:
     // https://w3c.github.io/timing-entrytypes-registry/#dfn-should-add-entry
     virtual PerformanceTimeline::ShouldAddEntry should_add_entry(Optional<PerformanceTimeline::PerformanceObserverInit const&> = {}) const override { return PerformanceTimeline::ShouldAddEntry::Yes; }
 
-    virtual FlyString const& entry_type() const override;
-
     JS::Value detail() const { return m_detail; }
 
 private:
-    PerformanceMark(JS::Realm&, String const& name, HighResolutionTime::DOMHighResTimeStamp start_time, HighResolutionTime::DOMHighResTimeStamp duration, JS::Value detail);
+    PerformanceMark(JS::Realm&, String const& name, HighResolutionTime::DOMHighResTimeStamp start_time, JS::Value detail);
 
     virtual void initialize(JS::Realm&) override;
     virtual void visit_edges(JS::Cell::Visitor&) override;

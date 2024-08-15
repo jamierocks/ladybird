@@ -19,7 +19,7 @@ namespace Web::UserTiming {
 JS_DEFINE_ALLOCATOR(PerformanceMeasure);
 
 PerformanceMeasure::PerformanceMeasure(JS::Realm& realm, String const& name, HighResolutionTime::DOMHighResTimeStamp start_time, HighResolutionTime::DOMHighResTimeStamp duration, JS::Value detail)
-    : PerformanceTimeline::PerformanceEntry(realm, name, start_time, duration)
+    : PerformanceTimeline::PerformanceEntry(realm, start_time, PerformanceTimeline::EntryTypes::measure, name, start_time + duration)
     , m_detail(detail)
 {
 }
@@ -29,11 +29,6 @@ PerformanceMeasure::~PerformanceMeasure() = default;
 JS::NonnullGCPtr<PerformanceMeasure> PerformanceMeasure::create(JS::Realm& realm, String const& measure_name, HighResolutionTime::DOMHighResTimeStamp start_time, HighResolutionTime::DOMHighResTimeStamp duration, JS::Value detail)
 {
     return realm.heap().allocate<PerformanceMeasure>(realm, realm, measure_name, start_time, duration, detail);
-}
-
-FlyString const& PerformanceMeasure::entry_type() const
-{
-    return PerformanceTimeline::EntryTypes::measure;
 }
 
 void PerformanceMeasure::initialize(JS::Realm& realm)

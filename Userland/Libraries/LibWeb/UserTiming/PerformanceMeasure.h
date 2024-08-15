@@ -41,8 +41,6 @@ public:
     // https://w3c.github.io/timing-entrytypes-registry/#dfn-should-add-entry
     virtual PerformanceTimeline::ShouldAddEntry should_add_entry(Optional<PerformanceTimeline::PerformanceObserverInit const&> = {}) const override { return PerformanceTimeline::ShouldAddEntry::Yes; }
 
-    virtual FlyString const& entry_type() const override;
-
     JS::Value detail() const { return m_detail; }
 
 private:

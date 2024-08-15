@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2023, Luke Wilde <lukew@serenityos.org>
+ * Copyright (c) 2024, Jamie Mansfield <jmansfield@cadixdev.org>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -28,29 +29,34 @@ class PerformanceEntry : public Bindings::PlatformObject {
 public:
     virtual ~PerformanceEntry();
 
-    // https://www.w3.org/TR/performance-timeline/#dom-performanceentry-entrytype
-    virtual FlyString const& entry_type() const = 0;
-
     String const& name() const { return m_name; }
+    FlyString const& entry_type() const { return m_entry_type; }
     HighResolutionTime::DOMHighResTimeStamp start_time() const { return m_start_time; }
-    HighResolutionTime::DOMHighResTimeStamp duration() const { return m_duration; }
+    HighResolutionTime::DOMHighResTimeStamp duration() const;
 
     // https://w3c.github.io/timing-entrytypes-registry/#dfn-should-add-entry
     virtual PerformanceTimeline::ShouldAddEntry should_add_entry(Optional<PerformanceObserverInit const&> = {}) const = 0;
 
 protected:
-    PerformanceEntry(JS::Realm&, String const& name, HighResolutionTime::DOMHighResTimeStamp start_time, HighResolutionTime::DOMHighResTimeStamp duration);
+    PerformanceEntry(JS::Realm&);
+    PerformanceEntry(JS::Realm&, HighResolutionTime::DOMHighResTimeStamp start_time, FlyString const& entry_type, String const& name, HighResolutionTime::DOMHighResTimeStamp end_time);
     virtual void initialize(JS::Realm&) override;
+
+    // https://www.w3.org/TR/performance-timeline/#dfn-initialize-a-performanceentry
+    void initialise_entry(HighResolutionTime::DOMHighResTimeStamp start_time, FlyString const& entry_type, String const& name, HighResolutionTime::DOMHighResTimeStamp end_time = 0);
 
 private:
     // https://www.w3.org/TR/performance-timeline/#dom-performanceentry-name
     String m_name;
 
+    // https://www.w3.org/TR/performance-timeline/#dom-performanceentry-entrytype
+    FlyString m_entry_type;
+
     // https://www.w3.org/TR/performance-timeline/#dom-performanceentry-starttime
     HighResolutionTime::DOMHighResTimeStamp m_start_time { 0.0 };
 
-    // https://www.w3.org/TR/performance-timeline/#dom-performanceentry-duration
-    HighResolutionTime::DOMHighResTimeStamp m_duration { 0.0 };
+    // https://www.w3.org/TR/performance-timeline/#dfn-end-time
+    HighResolutionTime::DOMHighResTimeStamp m_end_time { 0.0 };
 };
 
 }

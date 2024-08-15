@@ -18,8 +18,8 @@ namespace Web::UserTiming {
 
 JS_DEFINE_ALLOCATOR(PerformanceMark);
 
-PerformanceMark::PerformanceMark(JS::Realm& realm, String const& name, HighResolutionTime::DOMHighResTimeStamp start_time, HighResolutionTime::DOMHighResTimeStamp duration, JS::Value detail)
-    : PerformanceTimeline::PerformanceEntry(realm, name, start_time, duration)
+PerformanceMark::PerformanceMark(JS::Realm& realm, String const& name, HighResolutionTime::DOMHighResTimeStamp start_time, JS::Value detail)
+    : PerformanceTimeline::PerformanceEntry(realm, start_time, PerformanceTimeline::EntryTypes::mark, name, 0.0)
     , m_detail(detail)
 {
 }
@@ -73,7 +73,7 @@ WebIDL::ExceptionOr<JS::NonnullGCPtr<PerformanceMark>> PerformanceMark::construc
     }
 
     // 6. Set entry's duration attribute to 0.
-    constexpr HighResolutionTime::DOMHighResTimeStamp duration = 0.0;
+    // NOTE: This is done in the constructor.
 
     // 7. If markOptions's detail is null, set entry's detail to null.
     JS::Value detail;
@@ -90,12 +90,7 @@ WebIDL::ExceptionOr<JS::NonnullGCPtr<PerformanceMark>> PerformanceMark::construc
     }
 
     // 2. Create a new PerformanceMark object (entry) with the current global object's realm.
-    return realm.heap().allocate<PerformanceMark>(realm, realm, name, start_time, duration, detail);
-}
-
-FlyString const& PerformanceMark::entry_type() const
-{
-    return PerformanceTimeline::EntryTypes::mark;
+    return realm.heap().allocate<PerformanceMark>(realm, realm, name, start_time, detail);
 }
 
 void PerformanceMark::initialize(JS::Realm& realm)
