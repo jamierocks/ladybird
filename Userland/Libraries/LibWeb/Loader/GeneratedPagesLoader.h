@@ -21,6 +21,8 @@ ErrorOr<String> load_error_page(URL::URL const&, StringView error_message);
 
 ErrorOr<String> load_file_directory_page(URL::URL const&);
 
+ErrorOr<String> load_about_preferences_page();
+
 ErrorOr<String> load_about_version_page();
 
 }

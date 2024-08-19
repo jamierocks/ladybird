@@ -68,10 +68,12 @@ set(WEB_RESOURCES
     inspector.css
     inspector.js
     newtab.html
+    preferences.js
 )
 set(WEB_TEMPLATES
     directory.html
     error.html
+    preferences.html
     version.html
 )
 list(TRANSFORM WEB_RESOURCES PREPEND "${LADYBIRD_SOURCE_DIR}/Base/res/ladybird/")

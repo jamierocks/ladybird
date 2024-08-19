@@ -61,6 +61,7 @@
 #include <LibWeb/Infra/CharacterTypes.h>
 #include <LibWeb/Internals/Inspector.h>
 #include <LibWeb/Internals/Internals.h>
+#include <LibWeb/Internals/Settings.h>
 #include <LibWeb/Layout/Viewport.h>
 #include <LibWeb/Page/Page.h>
 #include <LibWeb/Painting/PaintableBox.h>
@@ -725,6 +726,8 @@ WebIDL::ExceptionOr<void> Window::initialize_web_interfaces(Badge<WindowEnvironm
         define_direct_property("inspector", heap().allocate<Internals::Inspector>(realm, realm), JS::default_attributes);
     if (s_internals_object_exposed)
         define_direct_property("internals", heap().allocate<Internals::Internals>(realm, realm), JS::default_attributes);
+
+    define_direct_property("settings", heap().allocate<Internals::Settings>(realm, realm), JS::default_attributes);
 
     return {};
 }

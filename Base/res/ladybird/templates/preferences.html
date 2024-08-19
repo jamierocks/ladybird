@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>%browser_name% Settings</title>
+    <style>
+        /* FIXME: We should be able to remove the HTML style when "color-scheme" is supported */
+        @media (prefers-color-scheme: dark) {
+            html {
+                background-color: rgb(20, 20, 20);
+                color: rgb(235, 235, 235);
+            }
+        }
+        img {
+            float: left;
+            margin-right: 10px;
+            height: 48px;
+        }
+        section {
+            margin-bottom: 2.5rem;
+        }
+        section > :not(:first-child) {
+            margin-left: 1rem;
+        }
+    </style>
+    <script src="resource://ladybird/preferences.js"></script>
+</head>
+<body>
+
+<header>
+    <picture>
+        <source srcset="resource://icons/128x128/app-browser.png" media="(prefers-color-scheme: dark)">
+        <img src="resource://icons/128x128/app-browser-dark.png">
+    </picture>
+    <h1>%browser_name% Settings</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Home</h2>
+
+        <h3>New Windows and Tabs</h3>
+
+        <label for="new-tab-url">Page on new tabs</label>
+        <input type="text" id="new-tab-url" data-settings-key="home.new_tab_url" />
+    </section>
+
+    <section>
+        <h2>Search</h2>
+
+        <h3><label for="search-engine">Search Engine</label></h3>
+
+        <select name="search-engine" id="search-engine" data-settings-key="search.search_engine">
+            <option value="bing">Bing</option>
+            <option value="brave">Brave</option>
+            <option value="duckduckgo">DuckDuckGo</option>
+            <option value="ecosia">Ecosia</option>
+            <option value="github">GitHub</option>
+            <option value="google">Google</option>
+            <option value="mojeek">Mojeek</option>
+            <option value="wikipedia">Wikipedia</option>
+            <option value="yahoo">Yahoo</option>
+            <option value="yandex">Yandex</option>
+        </select>
+
+        <h3>Search Suggestions</h3>
+
+        <label>
+            <input type="checkbox" id="show-search-suggestions" name="show-search-suggestions" data-settings-key="search.show_search_suggestions" />
+            Show search suggestions
+        </label>
+    </section>
+
+    <section>
+        <h2>Privacy & Security</h2>
+
+        <h3>Web Site Privacy Preferences</h3>
+
+        <label>
+            <input type="checkbox" id="do-not-track" name="do-not-track" data-settings-key="privacy.do_not_track" />
+            Send web sites a “Do Not Track” request
+        </label>
+    </section>
+</main>
+
+</body>
+</html>

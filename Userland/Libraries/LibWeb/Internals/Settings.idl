@@ -1,0 +1,5 @@
+[Exposed=Nobody]
+interface Settings {
+    DOMString get(DOMString key);
+    undefined set(DOMString key, DOMString value);
+};

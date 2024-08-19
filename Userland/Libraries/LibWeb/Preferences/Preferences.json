@@ -1,0 +1,18 @@
+{
+  "home.new_tab_url": {
+    "type": "string",
+    "initial_value": "about:newtab"
+  },
+  "search.search_engine": {
+    "type": "string",
+    "initial_value": "google"
+  },
+  "search.show_search_suggestions": {
+    "type": "boolean",
+    "initial_value": "true"
+  },
+  "privacy.do_not_track": {
+    "type": "boolean",
+    "initial_value": "false"
+  }
+}

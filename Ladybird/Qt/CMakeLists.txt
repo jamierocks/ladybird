@@ -9,6 +9,7 @@ target_sources(ladybird PRIVATE
     Icon.cpp
     InspectorWidget.cpp
     LocationEdit.cpp
+    Preferences.cpp
     Settings.cpp
     SettingsDialog.cpp
     Tab.cpp

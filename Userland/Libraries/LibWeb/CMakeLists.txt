@@ -488,6 +488,7 @@ set(SOURCES
     Internals/Inspector.cpp
     Internals/InternalAnimationTimeline.cpp
     Internals/Internals.cpp
+    Internals/Settings.cpp
     IntersectionObserver/IntersectionObserver.cpp
     IntersectionObserver/IntersectionObserverEntry.cpp
     Layout/AudioBox.cpp
@@ -614,6 +615,7 @@ set(SOURCES
     Platform/ImageCodecPlugin.cpp
     Platform/Timer.cpp
     Platform/TimerSerenity.cpp
+    Preferences/Preferences.cpp
     ReferrerPolicy/AbstractOperations.cpp
     ReferrerPolicy/ReferrerPolicy.cpp
     RequestIdleCallback/IdleDeadline.cpp
@@ -767,6 +769,15 @@ invoke_generator(
         arguments -j "${CMAKE_CURRENT_SOURCE_DIR}/ARIA/AriaRoles.json"
 )
 
+invoke_generator(
+        "StaticPreferences.cpp"
+        Lagom::GenerateStaticPreferences
+        "${CMAKE_CURRENT_SOURCE_DIR}/Preferences/Preferences.json"
+        "Preferences/StaticPreferences.h"
+        "Preferences/StaticPreferences.cpp"
+        arguments -j "${CMAKE_CURRENT_SOURCE_DIR}/Preferences/Preferences.json"
+)
+
 generate_css_implementation()
 
 set(GENERATED_SOURCES
@@ -781,6 +792,7 @@ set(GENERATED_SOURCES
     CSS/QuirksModeStyleSheetSource.cpp
     CSS/TransformFunctions.cpp
     MathML/MathMLStyleSheetSource.cpp
+    Preferences/StaticPreferences.cpp
     SVG/SVGStyleSheetSource.cpp
     Worker/WebWorkerClientEndpoint.h
     Worker/WebWorkerServerEndpoint.h

@@ -9,5 +9,6 @@ lagom_tool(GenerateCSSPseudoClass           SOURCES GenerateCSSPseudoClass.cpp L
 lagom_tool(GenerateCSSTransformFunctions    SOURCES GenerateCSSTransformFunctions.cpp LIBS LibMain)
 lagom_tool(GenerateWindowOrWorkerInterfaces SOURCES GenerateWindowOrWorkerInterfaces.cpp LIBS LibMain LibIDL)
 lagom_tool(GenerateAriaRoles                SOURCES GenerateAriaRoles.cpp LIBS LibMain)
+lagom_tool(GenerateStaticPreferences        SOURCES GenerateStaticPreferences.cpp LIBS LibMain)
 
 add_subdirectory(BindingsGenerator)

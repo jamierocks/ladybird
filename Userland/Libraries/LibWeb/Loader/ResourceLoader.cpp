@@ -250,6 +250,12 @@ void ResourceLoader::load(LoadRequest& request, SuccessCallback success_callback
         HTTP::HeaderMap response_headers;
         response_headers.set("Content-Type", "text/html; charset=UTF-8");
 
+        // Settings page
+        if (url.path_segment_at_index(0) == "preferences") {
+            success_callback(MUST(load_about_preferences_page()).bytes(), response_headers, {});
+            return;
+        }
+
         // About version page
         if (url.path_segment_at_index(0) == "version") {
             success_callback(MUST(load_about_version_page()).bytes(), response_headers, {});
